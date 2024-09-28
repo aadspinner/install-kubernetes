@@ -1,3 +1,6 @@
+#!/bin/bash
+
+#run this script file on all the nodes marked for cluster formation.
 
   sudo apt update -y
   echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.31/deb/ /" | sudo tee /etc/apt/sources.list.d/kubernetes.list
