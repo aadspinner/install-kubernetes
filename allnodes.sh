@@ -1,6 +1,4 @@
-#!/bin/bash
-
-#run this script file on all the nodes marked for cluster formation.
+  #!/bin/bash
 
   sudo apt update -y
   echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.31/deb/ /" | sudo tee /etc/apt/sources.list.d/kubernetes.list
@@ -10,9 +8,10 @@
   sudo apt-mark hold kubelet kubeadm kubectl
   sudo swapoff -a
   sudo sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab
+  
 
 
-  ## installing containerd.io
+  # installing containerd.io
 
   sudo apt-get update -y 
   sudo apt-get -y install ca-certificates curl
@@ -30,5 +29,23 @@
   containerd config default > /etc/containerd/config.toml
   sudo sed -i 's/SystemdCgroup = false/SystemdCgroup = true/' /etc/containerd/config.toml
   sudo systemctl restart containerd
+
+  # Install and configure firewalld
+sudo apt install firewalld -y
+sudo systemctl start firewalld
+sudo systemctl enable firewalld
+
+# Open necessary ports
+sudo firewall-cmd --permanent --zone=public --add-port=6443/tcp
+sudo firewall-cmd --permanent --zone=public --add-port=2379-2380/tcp
+sudo firewall-cmd --permanent --zone=public --add-port=10250/tcp
+sudo firewall-cmd --permanent --zone=public --add-port=10251/tcp
+sudo firewall-cmd --permanent --zone=public --add-port=10252/tcp
+sudo firewall-cmd --permanent --zone=public --add-port=80/tcp
+sudo firewall-cmd --permanent --zone=public --add-port=443/tcp
+sudo firewall-cmd --permanent --zone=public --add-service=http
+sudo firewall-cmd --reload
+sudo firewall-cmd --list-all
+
 
 
