@@ -1,0 +1,48 @@
+managedNodeGroups:
+  - name: spotinstances
+    instanceTypes:
+      - m6a.large
+      - c5a.large
+      - z1d.large
+      - c5a.large
+    desiredCapacity: 2
+    minSize: 2
+    maxSize: 2
+    spot: true
+    amiFamily: AmazonLinux2023
+    releaseVersion: ""
+    privateNetworking: false
+    disableIMDSv1: true
+    disablePodIMDS: false
+    instanceSelector: {}
+    labels:
+      alpha.eksctl.io/cluster-name: dev-test
+      alpha.eksctl.io/nodegroup-name: spotinstances
+    tags:
+      alpha.eksctl.io/nodegroup-name: spotinstances
+      alpha.eksctl.io/nodegroup-type: managed
+    ssh:
+      allow: true
+      publicKeyName: k9
+    volumeSize: 80
+    volumeType: gp3
+    volumeIOPS: 3000
+    volumeThroughput: 125
+    securityGroups:
+      withLocal: null
+      withShared: null
+    iam:
+      withAddonPolicies:
+        albIngress: true
+        appMesh: null
+        appMeshPreview: null
+        autoScaler: false
+        awsLoadBalancerController: false
+        certManager: false
+        cloudWatch: true
+        ebs: false
+        efs: false
+        externalDNS: false
+        fsx: false
+        imageBuilder: false
+        xRay: false

@@ -1,0 +1,101 @@
+accessConfig:
+  authenticationMode: API_AND_CONFIG_MAP
+addonsConfig: {}
+apiVersion: eksctl.io/v1alpha5
+availabilityZones:
+- ap-south-1a
+- ap-south-1b
+cloudWatch:
+  clusterLogging: {}
+iam:
+  vpcResourceControllerPolicy: true
+  withOIDC: true
+kind: ClusterConfig
+kubernetesNetworkConfig:
+  serviceIPv4CIDR: 10.100.0.0/16
+managedNodeGroups:
+- amiFamily: Ubuntu2204
+  desiredCapacity: 3
+  disableIMDSv1: true
+  disablePodIMDS: false
+  iam:
+    withAddonPolicies:
+      albIngress: true
+      appMesh: null
+      appMeshPreview: null
+      autoScaler: false
+      awsLoadBalancerController: true
+      certManager: false
+      cloudWatch: true
+      ebs: false
+      efs: false
+      externalDNS: false
+      fsx: false
+      imageBuilder: false
+      xRay: false
+  instanceSelector: {}
+  instanceTypes:
+  - m6a.large
+  - c5a.large
+  - z1d.large
+  - c5a.large
+  labels:
+    alpha.eksctl.io/cluster-name: dev-test1
+    alpha.eksctl.io/nodegroup-name: spotinstances
+  maxSize: 5
+  minSize: 3
+  name: spotinstances
+  privateNetworking: false
+  releaseVersion: ""
+  securityGroups:
+    withLocal: null
+    withShared: null
+  spot: true
+  ssh:
+    allow: true
+    publicKeyName: k9
+  tags:
+    alpha.eksctl.io/nodegroup-name: spotinstances
+    alpha.eksctl.io/nodegroup-type: managed
+  volumeIOPS: 3000
+  volumeSize: 80
+  volumeThroughput: 125
+  volumeType: gp3
+metadata:
+  name: dev-test1
+  region: ap-south-1
+  version: "1.30"
+privateCluster:
+  enabled: false
+  skipEndpointCreation: false
+vpc:
+  autoAllocateIPv6: false
+  cidr: 192.168.0.0/16
+  clusterEndpoints:
+    privateAccess: false
+    publicAccess: true
+  id: vpc-0e2332e998344b9fc
+  manageSharedNodeSecurityGroupRules: true
+  nat:
+    gateway: Single
+  securityGroup: sg-05577e05cf426744e
+  sharedNodeSecurityGroup: sg-0221530a8428624d9
+  subnets:
+    private:
+      ap-south-1a:
+        az: ap-south-1a
+        cidr: 192.168.64.0/19
+        id: subnet-088b54deb7c5a836e
+      ap-south-1b:
+        az: ap-south-1b
+        cidr: 192.168.96.0/19
+        id: subnet-053bc5f0da4c2dac6
+    public:
+      ap-south-1a:
+        az: ap-south-1a
+        cidr: 192.168.0.0/19
+        id: subnet-071457e2c11ce59da
+      ap-south-1b:
+        az: ap-south-1b
+        cidr: 192.168.32.0/19
+        id: subnet-0e518872b714c7102

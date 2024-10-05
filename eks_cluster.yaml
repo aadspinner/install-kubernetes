@@ -1,0 +1,64 @@
+apiVersion: eksctl.io/v1alpha5
+cloudWatch:
+  clusterLogging: {}
+iam:
+  vpcResourceControllerPolicy: true
+  withOIDC: true
+kind: ClusterConfig
+managedNodeGroups:
+- name: spotinstances
+  instanceTypes: ["i3.large","m6a.large","c5a.large","z1d.large","c5a.large"]
+  spot: true
+- amiFamily: Ubuntu2204
+  desiredCapacity: 3
+  disableIMDSv1: true
+  disablePodIMDS: false
+  iam:
+    withAddonPolicies:
+      albIngress: true
+      appMesh: true
+      appMeshPreview: false
+      autoScaler: false
+      certManager: false
+      cloudWatch: false
+      ebs: true
+      efs: false
+      externalDNS: false
+      fsx: false
+      imageBuilder: false
+      xRay: false
+  instanceSelector: {}
+  instanceType: i3.large
+  labels:
+    alpha.eksctl.io/cluster-name: development
+    alpha.eksctl.io/nodegroup-name: eks-ng
+  maxSize: 5
+  minSize: 3
+  name: eks-ng
+  privateNetworking: false
+  securityGroups:
+    withLocal: null
+    withShared: null
+  ssh:
+    allow: true
+    publicKeyName: k8
+  tags:
+    alpha.eksctl.io/nodegroup-name: eks-ng
+    alpha.eksctl.io/nodegroup-type: managed
+  volumeSize: 80
+  volumeType: gp3
+metadata:
+  name: development
+  region: ap-south-1
+  version: "1.30"
+privateCluster:
+  enabled: false
+vpc:
+  autoAllocateIPv6: false
+  cidr: 192.168.0.0/16
+  clusterEndpoints:
+    privateAccess: false
+    publicAccess: true
+  manageSharedNodeSecurityGroupRules: true
+  nat:
+    gateway: Single

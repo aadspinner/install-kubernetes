@@ -1,0 +1,99 @@
+accessConfig:
+  authenticationMode: API_AND_CONFIG_MAP
+addonsConfig: {}
+apiVersion: eksctl.io/v1alpha5
+availabilityZones:
+- ap-south-1a
+- ap-south-1b
+- ap-south-1c
+cloudWatch:
+  clusterLogging: {}
+iam:
+  vpcResourceControllerPolicy: true
+  withOIDC: true
+kind: ClusterConfig
+managedNodeGroups:
+- amiFamily: AmazonLinux2023
+  desiredCapacity: 2
+  disableIMDSv1: true
+  disablePodIMDS: false
+  iam:
+    withAddonPolicies:
+      albIngress: false
+      appMesh: null
+      appMeshPreview: null
+      autoScaler: false
+      awsLoadBalancerController: false
+      certManager: false
+      cloudWatch: false
+      ebs: false
+      efs: false
+      externalDNS: false
+      fsx: false
+      imageBuilder: false
+      xRay: false
+  instanceSelector: {}
+  instanceTypes:
+  - i3.large
+  - m6a.large
+  - c5a.large
+  - z1d.large
+  - c5a.large
+  labels:
+    alpha.eksctl.io/cluster-name: development1
+  maxSize: 2
+  minSize: 2
+  #name: spotinstances
+  privateNetworking: false
+  releaseVersion: ""
+  securityGroups:
+    withLocal: null
+    withShared: null
+  spot: true
+  ssh:
+    allow: true
+    publicKeyName: k9
+  tags:
+    alpha.eksctl.io/nodegroup-name: spotinstances
+    alpha.eksctl.io/nodegroup-type: managed
+  #name: eks-nodes
+  volumeIOPS: 3000
+  volumeSize: 80
+  volumeThroughput: 125
+  volumeType: gp3
+- amiFamily: Ubuntu2204
+  desiredCapacity: 3
+  disableIMDSv1: true
+  disablePodIMDS: false
+  spot: true
+  iam:
+    withAddonPolicies:
+      albIngress: true
+      appMesh: true
+      appMeshPreview: false
+      autoScaler: false
+      awsLoadBalancerController: false
+      certManager: false
+      cloudWatch: false
+      ebs: true
+      efs: false
+      externalDNS: false
+      fsx: false
+      imageBuilder: false
+      xRay: false
+metadata:
+  name: development1
+  region: ap-south-1
+  version: "1.30"
+privateCluster:
+  enabled: false
+  skipEndpointCreation: false
+vpc:
+  autoAllocateIPv6: false
+  cidr: 192.168.0.0/16
+  clusterEndpoints:
+    privateAccess: false
+    publicAccess: true
+  manageSharedNodeSecurityGroupRules: true
+  nat:
+    gateway: Single
