@@ -13,7 +13,7 @@ iam:
 kind: ClusterConfig
 managedNodeGroups:
 - amiFamily: Ubuntu2204
-  desiredCapacity: 3
+  desiredCapacity: 2
   disableIMDSv1: true
   disablePodIMDS: false
   iam:
@@ -25,7 +25,7 @@ managedNodeGroups:
       awsLoadBalancerController: false
       certManager: false
       cloudWatch: true
-      ebs: false
+      ebs: true
       efs: false
       externalDNS: false
       fsx: false
@@ -33,15 +33,15 @@ managedNodeGroups:
       xRay: false
   instanceSelector: {}
   instanceTypes:
-  - m6a.large
-  - c5a.large
-  - z1d.large
-  - c5a.large
+  - t3.small
+  - t3a.small
+  - t3a.medium
+  - t3.medium
   labels:
-    alpha.eksctl.io/cluster-name: dev-test1
+    alpha.eksctl.io/cluster-name: dev-test2
     alpha.eksctl.io/nodegroup-name: spotinstances
-  maxSize: 5
-  minSize: 3
+  maxSize: 2
+  minSize: 2
   name: spotinstances
   privateNetworking: false
   releaseVersion: ""
@@ -60,7 +60,7 @@ managedNodeGroups:
   volumeThroughput: 125
   volumeType: gp3
 metadata:
-  name: dev-test1
+  name: dev-test2
   region: ap-south-1
   version: "1.30"
 privateCluster:

@@ -35,10 +35,10 @@ managedNodeGroups:
       xRay: false
   instanceSelector: {}
   instanceTypes:
-  - m6a.large
-  - c5a.large
-  - z1d.large
-  - c5a.large
+  - t3.small
+  - t3a.small
+  - t3a.medium
+  - t3.medium
   labels:
     alpha.eksctl.io/cluster-name: dev-test1
     alpha.eksctl.io/nodegroup-name: spotinstances
